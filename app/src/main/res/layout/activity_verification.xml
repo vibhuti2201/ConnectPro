@@ -78,7 +78,7 @@
             android:layout_height="wrap_content">
 
             <EditText
-                android:id="@+id/editNumber"
+                android:id="@+id/phoneEditTextNumber"
                 android:hint="Type your Phone Number"
                 android:padding="10dp"
                 android:ems="1"
@@ -92,7 +92,7 @@
                 android:layout_height="wrap_content"/>
 
             <Button
-                android:id="@+id/continueBtn"
+                android:id="@+id/sendOTPBtn"
                 android:text="Continue"
                 android:textSize="16sp"
                 android:backgroundTint="#32BD38"
@@ -103,5 +103,17 @@
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
+
+    <ProgressBar
+        android:id="@+id/phoneProgressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminateTint="#32BD38"
+        app:layout_constraintBottom_toTopOf="@+id/textView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
 </LinearLayout>
