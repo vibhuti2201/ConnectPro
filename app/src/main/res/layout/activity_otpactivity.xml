@@ -172,7 +172,7 @@
         android:id="@+id/resendTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="-dp"
+        android:layout_marginTop="-4dp"
         android:text="Resend OTP"
         android:textColor="@color/black"
         android:textSize="16sp"
