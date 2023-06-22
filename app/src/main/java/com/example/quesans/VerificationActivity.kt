@@ -83,7 +83,7 @@ class VerificationActivity : AppCompatActivity() {
     }
 
     private fun sendToMain(){
-        startActivity(Intent(this,MainActivity::class.java))
+        startActivity(Intent(this,Set_up_profile::class.java))
     }
     private val callbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
 
@@ -139,7 +139,7 @@ class VerificationActivity : AppCompatActivity() {
         super.onStart()
         if(auth.currentUser!=null)
         {
-            startActivity(Intent(this,MainActivity::class.java))
+            startActivity(Intent(this,Set_up_profile::class.java))
         }
     }
 }

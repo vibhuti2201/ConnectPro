@@ -13,19 +13,21 @@
         android:theme="@style/Theme.QuesAns"
         tools:targetApi="31">
         <activity
+            android:name=".Set_up_profile"
+            android:exported="false" />
+        <activity
             android:name=".OTPActivity"
             android:exported="false" />
-        <activity android:name=".VerificationActivity"
+        <activity
+            android:name=".VerificationActivity"
             android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>
