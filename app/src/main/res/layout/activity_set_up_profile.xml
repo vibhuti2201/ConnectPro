@@ -10,7 +10,7 @@
     tools:context=".Set_up_profile">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/iv"
+        android:id="@+id/imageView11"
         android:layout_marginTop="32dp"
         android:src="@drawable/user"
         android:layout_width="150dp"
@@ -23,6 +23,7 @@
         android:textStyle="bold|normal"
         android:layout_marginTop="19dp"
         android:textSize="20sp"
+        android:inputType="text"
         android:textColor="#1C47E6"
         android:textAlignment="center"/>
 
@@ -58,7 +59,7 @@
                 android:padding="10dp"
                 android:ems="1"
                 android:minHeight="48dp"
-                android:inputType="phone"
+                android:inputType="text"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:textColor="#1C1C1C"

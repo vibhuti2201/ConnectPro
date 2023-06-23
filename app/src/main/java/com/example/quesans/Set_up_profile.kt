@@ -25,72 +25,97 @@ class Set_up_profile : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding=ActivitySetUpProfileBinding.inflate(layoutInflater)
+        binding = ActivitySetUpProfileBinding.inflate(layoutInflater)
         setContentView(binding!!.root)
+
+        dialog = ProgressDialog(this)
         dialog!!.setMessage("Updating Profile...")
         dialog!!.setCancelable(false)
-        database= FirebaseDatabase.getInstance()
+
+        auth = FirebaseAuth.getInstance()
+        database = FirebaseDatabase.getInstance()
         storage = FirebaseStorage.getInstance()
-        auth= FirebaseAuth.getInstance()
-        binding!!.imageView.setOnClickListener{
-            val intent= Intent()
+
+        binding!!.imageView11.setOnClickListener {
+            val intent = Intent()
             intent.action = Intent.ACTION_GET_CONTENT
-            intent.type ="image/*"
-            startActivityForResult(intent,45)
+            intent.type = "image/*"
+            startActivityForResult(intent, 45)
         }
         binding!!.continueBtn02.setOnClickListener {
             val name: String = binding!!.nameBox.text.toString()
-            if(name.isEmpty())
-            {
-                binding!!.nameBox.setError(("Please type a name"))
-            }
-             dialog!!.show()
-            if(selectedImage!=null)
-            {
-                val reference= storage!!.reference.child("Profile")
-                    .child(auth!!.uid!!)
-                reference.putFile(selectedImage!!).addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        reference.downloadUrl.addOnCompleteListener{ uri->
-                            val imageUrl= uri.toString()
-                            val uid=auth!!.uid
-                            val phone=auth!!.currentUser!!.phoneNumber
-                            val name: String= binding!!.nameBox.text.toString()
-                            val user= User(uid,name, phone,imageUrl)
-                            database!!.reference
-                                .child("users")
-                                .setValue(user)
-                                .addOnCompleteListener {
-                                    dialog!!.dismiss()
-                                    val intent= Intent(this@Set_up_profile,MainActivity::class.java)
-                                    finish()
-                                }
-                        }
+            if (name.isEmpty()) {
+                binding!!.nameBox.error = ("Please type a name")
+            } else {
+                dialog!!.show()
 
-                    }
-                    else{
-                        val uid= auth!!.uid
-                        val phone =auth!!.currentUser!!.phoneNumber
-                        val name: String= binding!!.nameBox.text.toString()
-                        val user=User(uid,name,phone,"No Image")
-                        database!!.reference
-                            .child("")
-                            .child(uid!!)
-                            .setValue(user)
-                            .addOnCanceledListener {
-                                dialog!!.dismiss()
-                                val intent= Intent(this@Set_up_profile,MainActivity::class.java)
-                                startActivity(intent)
-                                finish()
+
+                if (selectedImage != null) {
+                    val reference = storage!!.reference.child("Profile")
+                        .child(auth!!.uid!!)
+                    reference.putFile(selectedImage!!).addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            reference.downloadUrl.addOnCompleteListener { uri ->
+                                val imageUrl = uri.toString()
+                                val uid = auth!!.uid
+                                val phone = auth!!.currentUser!!.phoneNumber
+                                val name: String = binding!!.nameBox.text.toString()
+                                val user = User(uid, name, phone, imageUrl)
+                                database!!.reference
+                                    .child("users")
+                                    .setValue(user)
+                                    .addOnCompleteListener {
+                                        dialog!!.dismiss()
+                                        val intent =
+                                            Intent(this@Set_up_profile, MainActivity::class.java)
+                                        startActivity(intent)
+                                        finish()
+                                    }
                             }
 
+                        } else {
+                            val uid = auth!!.uid
+                            val phone = auth!!.currentUser!!.phoneNumber
+                            val name: String = binding!!.nameBox.text.toString()
+                            val user = User(uid, name, phone, "No Image")
+                            dialog!!.dismiss()
+                            database!!.reference
+                                .child("users")
+                                .child(uid!!)
+                                .setValue(user)
+                                .addOnCanceledListener {
+                                    dialog!!.dismiss()
+//                                val intent= Intent(this@Set_up_profile,MainActivity::class.java)
+//                                startActivity(intent)
+                                    startMainActivity()
+                                    finish()
+                                }
+
+                        }
                     }
+                } else {
+                    val uid = auth!!.uid
+                    val phone = auth!!.currentUser!!.phoneNumber
+                    val name: String = binding!!.nameBox.text.toString()
+                    val user = User(uid, name, phone, "No Image")
+                    database!!.reference
+                        .child("users")
+                        .child(uid!!)
+                        .setValue(user)
+                        .addOnCanceledListener {
+                            dialog!!.dismiss()
+                            startMainActivity()
+                        }
                 }
+
             }
         }
-
     }
-
+            private fun startMainActivity() {
+                val intent = Intent(this@Set_up_profile, MainActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -117,7 +142,7 @@ class Set_up_profile : AppCompatActivity() {
                         }
                     }
                 }
-                binding!!.imageView.findViewById<CircleImageView>(R.id.iv).setImageURI(data.data)
+                binding!!.root.findViewById<CircleImageView>(R.id.imageView11).setImageURI(data.data)
                 selectedImage = data.data
             }
         }
