@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E9F1EC"
+    android:background="#DDD7CD"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
    <TextView
@@ -16,4 +17,36 @@
        android:textColor="#3F51B5"
        android:layout_width="match_parent"
        android:layout_height="wrap_content"/>
+
+   <TextView
+       android:text="Ask your any question for Expert and get solution for your problem"
+       android:textSize="13sp"
+       android:textStyle="bold|normal"
+       android:textAlignment="textStart"
+       android:layout_marginTop="1dp"
+       android:textColor="#656364"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"/>
+   
+   <View
+       android:backgroundTint="#535151"
+      android:background="#3E3E3E"
+       android:layout_width="match_parent"
+       android:layout_height="1dp"
+       android:layout_marginBottom="15dp"
+       android:layout_marginTop="9dp"/>
+
+   <LinearLayout
+       android:orientation="vertical"
+       android:layout_marginTop="6dp"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content">
+
+      <androidx.recyclerview.widget.RecyclerView
+          android:id="@+id/mRec"
+          tools:listitem="@layout/item_profile"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"/>
+   </LinearLayout>
+
 </LinearLayout>
