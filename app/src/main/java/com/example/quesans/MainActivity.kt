@@ -6,6 +6,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.GridLayout
 import androidx.recyclerview.widget.GridLayoutManager
@@ -18,6 +19,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.Logger
 import com.google.firebase.database.ValueEventListener
+
 
 
 
@@ -38,7 +40,7 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
 
-        setContentView(binding!!.root)
+        setContentView(binding.root)
 
         dialog = ProgressDialog(this@MainActivity)
         dialog!!.setMessage("Updating Image...")
@@ -46,7 +48,7 @@ class MainActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
 
         database = FirebaseDatabase.getInstance()
-        users = ArrayList<User>()
+        users = ArrayList()
         usersAdapter = UserAdapter(this@MainActivity, users!!)
 
         val layoutManager = GridLayoutManager(this@MainActivity, 2)
@@ -73,18 +75,27 @@ class MainActivity : AppCompatActivity() {
                             users!!.add(user)
                             Log.d("TAG","User added:$user")
                         }
-                        else
-                        {
+                        else {
                             Log.d("TAG", "Skipping current user: uid=$uid, currentUid=${FirebaseAuth.getInstance().uid}")
                         }
                     }
                     usersAdapter!!.notifyDataSetChanged()
                     Log.d("TAG", "User List Size: ${users!!.size}")
+                    handleEmptyUserList()
                 }
 
-                override fun onCancelled(error: DatabaseError) {}
-
+                override fun onCancelled(error: DatabaseError) {
+                    Log.d("TAG", "Database Error: ${error.message}")
+                }
             })
+    }private fun handleEmptyUserList() {
+        if (users!!.isEmpty()) {
+            binding.mRec.visibility = View.VISIBLE
+            binding.mRec.visibility = View.GONE
+        } else {
+            binding.mRec.visibility = View.GONE
+            binding.mRec.visibility = View.VISIBLE
+        }
     }
 
     override fun onResume() {

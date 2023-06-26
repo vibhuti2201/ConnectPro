@@ -22,9 +22,12 @@ class UserAdapter(var context:Context,var userList: ArrayList<User>):
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
-        var v=LayoutInflater.from(context).inflate(R.layout.item_profile,
-        parent,false)
-        return UserViewHolder(v)
+//        var v=LayoutInflater.from(context).inflate(R.layout.item_profile,
+//        parent,true)
+//        return UserViewHolder(v)
+        val inflater=LayoutInflater.from(parent.context)
+        val itemView = inflater.inflate(R.layout.item_profile,parent,false)
+        return  UserViewHolder(itemView)
     }
 
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
@@ -36,7 +39,7 @@ class UserAdapter(var context:Context,var userList: ArrayList<User>):
             .into(holder.binding.profile)
     }
 
-    override fun getItemCount(): Int =userList.size
+    override fun getItemCount():Int =userList.size
 
 
 }
