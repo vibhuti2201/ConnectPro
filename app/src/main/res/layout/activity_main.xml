@@ -10,7 +10,7 @@
 
    <TextView
        android:text="ConnectPro"
-       android:textSize="25sp"
+       android:textSize="24sp"
        android:textStyle="bold|normal"
        android:textAlignment="center"
        android:layout_marginTop="20dp"
