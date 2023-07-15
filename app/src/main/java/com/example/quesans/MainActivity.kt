@@ -20,8 +20,8 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.Logger
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.*
-
-
+//import kotlinx.coroutines.DefaultExecutor.isEmpty
+import android.os.Handler
 
 
 //class MainActivity : AppCompatActivity() {
@@ -178,26 +178,45 @@ class MainActivity : AppCompatActivity() {
             val usersRef = database!!.reference.child("users").child(currentUserId)
             usersRef.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    users.clear()
+//                    users.clear()
+                    val users: ArrayList<User> = ArrayList()
                     for (userSnapshot in snapshot.children) {
                         val uid = userSnapshot.child("uid").getValue(String::class.java)
                         val name = userSnapshot.child("name").getValue(String::class.java)
-                        val phoneNumber = userSnapshot.child("phoneNumber").getValue(String::class.java)
-                        val profileImage = userSnapshot.child("profileImage").getValue(String::class.java)
+                        val phoneNumber =
+                            userSnapshot.child("phoneNumber").getValue(String::class.java)
+                        val profileImage =
+                            userSnapshot.child("profileImage").getValue(String::class.java)
 
-                        Log.d("TAG", "User Data: uid=$uid, name=$name, phoneNumber=$phoneNumber, profileImage=$profileImage")
+                        Log.d(
+                            "TAG",
+                            "User Data: uid=$uid, name=$name, phoneNumber=$phoneNumber, profileImage=$profileImage"
+                        )
 
                         if (uid != null && uid != FirebaseAuth.getInstance().uid) {
                             val user = User(uid, name, phoneNumber, profileImage)
                             users.add(user)
                             Log.d("TAG", "User added: $user")
                         } else {
-                            Log.d("TAG", "Skipping current user: uid=$uid, currentUid=${FirebaseAuth.getInstance().uid}")
+                            Log.d(
+                                "TAG",
+                                "Skipping current user: uid=$uid, currentUid=${FirebaseAuth.getInstance().uid}"
+                            )
                         }
                     }
                     usersAdapter!!.notifyDataSetChanged()
-                    Log.d("TAG", "User List Size: ${users.size}")
-                    handleEmptyUserList()
+//                    Log.d("TAG", "User List Size: ${users.size}")
+//                    handleEmptyUserList()
+
+                    if (usersAdapter == null) {
+                        usersAdapter = UserAdapter(this@MainActivity, users)
+                        binding.mRec.adapter = usersAdapter
+                    } else {
+                        usersAdapter?.userList = users
+                        usersAdapter?.notifyDataSetChanged()
+                    }
+
+                    handleEmptyUserList(users.isEmpty())
                 }
 
                 override fun onCancelled(error: DatabaseError) {
@@ -207,15 +226,26 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun handleEmptyUserList() {
-        if (users!!.isEmpty()) {
-            binding.mRec.visibility = View.VISIBLE
-            binding.mRec.visibility = View.GONE
-        } else {
-            binding.mRec.visibility = View.GONE
-            binding.mRec.visibility = View.VISIBLE
+//    private fun handleEmptyUserList() {
+//        if (users!!.isEmpty()) {
+//            binding.mRec.visibility = View.VISIBLE
+//            binding.mRec.visibility = View.GONE
+//        } else {
+//            binding.mRec.visibility = View.GONE
+//            binding.mRec.visibility = View.VISIBLE
+//        }
+//}
+private fun handleEmptyUserList(isEmpty: Boolean) {
+        if (isEmpty) {
+                binding.mRec.visibility = View.GONE
+                binding.mRec.visibility = View.VISIBLE
+            }
+        else
+                binding.mRec.visibility = View.VISIBLE
+                binding.mRec.visibility = View.GONE
+
         }
-    }
+
 
     override fun onResume() {
         super.onResume()
