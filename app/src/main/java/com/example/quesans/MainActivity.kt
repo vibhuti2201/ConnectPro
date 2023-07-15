@@ -266,7 +266,7 @@ private fun handleEmptyUserList(isEmpty: Boolean) {
                 .setValue("Offline")
         }
     }
-
+//destroy
     override fun onDestroy() {
         super.onDestroy()
     }
