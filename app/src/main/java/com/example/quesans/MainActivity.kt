@@ -216,7 +216,7 @@ class MainActivity : AppCompatActivity() {
                         usersAdapter?.notifyDataSetChanged()
                     }
 
-                    handleEmptyUserList(users.isEmpty())
+                    handleEmptyUserList()
                 }
 
                 override fun onCancelled(error: DatabaseError) {
@@ -235,8 +235,8 @@ class MainActivity : AppCompatActivity() {
 //            binding.mRec.visibility = View.VISIBLE
 //        }
 //}
-private fun handleEmptyUserList(isEmpty: Boolean) {
-        if (isEmpty) {
+private fun handleEmptyUserList() {
+        if (users!!.isEmpty()) {
                 binding.mRec.visibility = View.GONE
                 binding.mRec.visibility = View.VISIBLE
             }
