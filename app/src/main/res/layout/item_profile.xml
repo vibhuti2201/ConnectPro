@@ -35,7 +35,7 @@
                 android:text="Profile Name"
                 android:textStyle="bold|normal"
                 android:textAlignment="center"
-                android:textSize="15sp"
+                android:textSize="16sp"
                 android:textColor="#0F228C"
                 android:layout_marginTop="5dp"
                 android:layout_width="match_parent"
