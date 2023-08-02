@@ -43,7 +43,7 @@
 
 
             <TextView
-                android:text="Work in Android Development and Application UI Design"
+                android:text="Work in Android Development and application UI Design"
                 android:textStyle="normal"
                 android:textAlignment="center"
                 android:textSize="16sp"
