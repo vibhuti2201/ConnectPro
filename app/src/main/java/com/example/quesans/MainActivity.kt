@@ -152,9 +152,11 @@ class MainActivity : AppCompatActivity() {
     private lateinit var signOutBtn: Button
     private lateinit var binding: ActivityMainBinding
     private var database: FirebaseDatabase? = null
-    private var users: ArrayList<User> = ArrayList()
+//    private var users: ArrayList<User> = ArrayList()
+    val users: ArrayList<User> = ArrayList()
     private var usersAdapter: UserAdapter? = null
     private var dialog: ProgressDialog? = null
+    var user:User?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -170,10 +172,10 @@ class MainActivity : AppCompatActivity() {
         usersAdapter = UserAdapter(this@MainActivity, users)
 
         val layoutManager = GridLayoutManager(this@MainActivity, 2)
-        binding.mRec.layoutManager = layoutManager
-        binding.mRec.adapter = usersAdapter
+        binding!!.mRec.layoutManager = layoutManager
+        binding!!.mRec.adapter = usersAdapter
 
-        val currentUserId = FirebaseAuth.getInstance().currentUser?.uid
+        val currentUserId = FirebaseAuth.getInstance().currentUser?.uid?:"defaultUserId"
         if (currentUserId != null) {
             val usersRef = database!!.reference.child("users").child(currentUserId)
             usersRef.addValueEventListener(object : ValueEventListener {
@@ -187,6 +189,9 @@ class MainActivity : AppCompatActivity() {
                             userSnapshot.child("phoneNumber").getValue(String::class.java)
                         val profileImage =
                             userSnapshot.child("profileImage").getValue(String::class.java)
+
+                        val user = User(uid, name, phoneNumber, profileImage)
+                        users.add(user)
 
                         Log.d(
                             "TAG",
@@ -215,7 +220,7 @@ class MainActivity : AppCompatActivity() {
                         usersAdapter?.userList = users
                         usersAdapter?.notifyDataSetChanged()
                     }
-
+                    Log.d("TAG", "Number of users fetched: ${users.size}")
                     handleEmptyUserList()
                 }
 
