@@ -79,8 +79,14 @@
                 android:textAllCaps="false"
                 android:layout_height="wrap_content"/>
 
+            <Button
+                android:id="@+id/btnclick"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Click"/>
 
         </LinearLayout>
+
 
     </androidx.cardview.widget.CardView>
 

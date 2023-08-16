@@ -5,5 +5,7 @@ data class User(
     var name: String? = null,
     var phoneNumber: String? = null,
     var profileImage: String? = null,
-    var image: String?=null
-)
+//    var image: String?=null
+) {
+
+}

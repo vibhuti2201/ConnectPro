@@ -6,6 +6,7 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.webkit.HttpAuthHandler
+import android.widget.Button
 import com.example.quesans.databinding.ActivitySetUpProfileBinding
 import com.example.quesans.model.User
 import com.google.firebase.auth.FirebaseAuth
@@ -77,6 +78,7 @@ class Set_up_profile : AppCompatActivity() {
                         .child(firebaseUser!!.uid!!)
                     reference.putFile(selectedImage!!).addOnCompleteListener { task ->
                         if (task.isSuccessful) {
+//                            start
 //                                reference.downloadUrl.addOnCompleteListener { uri ->
 //                                    val imageUrl = uri.toString()
 //                                    val uid = auth!!.uid
@@ -137,9 +139,12 @@ class Set_up_profile : AppCompatActivity() {
 //            }
 //        }
 //    }
+//
+//end
 
                             reference.downloadUrl.addOnCompleteListener { uri ->
-                                user!!.image = uri.toString()
+//                                user!!.image = uri.toString()
+                                user!!.profileImage = uri.toString()
                                 updateProfile()
                             }
 
@@ -210,5 +215,10 @@ class Set_up_profile : AppCompatActivity() {
                     selectedImage = data.data
                 }
             }
+            findViewById<Button>(R.id.btnclick).setOnClickListener {
+                val intent = Intent(this,VerificationActivity::class.java)
+                startActivity(intent)
+            }
         }
+
     }
